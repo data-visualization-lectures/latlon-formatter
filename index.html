@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV 緯度経度編集ツール</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>CSV 緯度経度編集ツール</h1>
+        <p class="subtitle">CSVの緯度経度列を簡単に編集して、再度ダウンロード</p>
+
+        <!-- ファイルアップロード -->
+        <div class="section">
+            <label>CSVファイルをアップロード:</label>
+            <div class="file-upload-area">
+                <input
+                    type="file"
+                    id="fileInput"
+                    accept=".csv"
+                    class="file-input"
+                >
+                <label for="fileInput" class="file-upload-label">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>CSVファイルをドラッグ＆ドロップ<br>または選択</span>
+                </label>
+                <small class="hint">対応形式: CSV</small>
+            </div>
+            <div id="fileInfo" class="file-info" style="display: none;"></div>
+            <div id="dataPreview" class="data-preview" style="display: none; margin-top: 15px;"></div>
+        </div>
+
+        <!-- 形式選択 -->
+        <div id="formatSelectionSection" class="section" style="display: none;">
+            <h3>座標データの形式を選択</h3>
+            <p>現在のCSVの形式と、変換後の形式を選択してください</p>
+
+            <div class="format-selection-row">
+                <div class="format-select">
+                    <label>現在の形式:</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="currentFormat" value="single" checked>
+                            <span>1列形式</span><br>
+                            <small>例: "35.6762,139.6503"</small>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="currentFormat" value="double">
+                            <span>2列形式</span><br>
+                            <small>例: "35.6762","139.6503"</small>
+                        </label>
+                    </div>
+                    <label for="singleColumnSelect" id="singleColumnLabel" style="margin-top: 10px;">座標列を選択:</label>
+                    <select id="singleColumnSelect" class="input-field" style="display: none;"></select>
+
+                    <div id="doubleColumnSelection" style="display: none; margin-top: 10px;">
+                        <label for="latitudeColumn">緯度（Latitude）列:</label>
+                        <select id="latitudeColumn" class="input-field"></select>
+                        <label for="longitudeColumn" style="margin-top: 10px;">経度（Longitude）列:</label>
+                        <select id="longitudeColumn" class="input-field"></select>
+                    </div>
+                </div>
+
+                <div class="format-select">
+                    <label>変換後の形式:</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="targetFormat" value="single">
+                            <span>1列形式</span><br>
+                            <small>"35.6762,139.6503"</small>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="targetFormat" value="double" checked>
+                            <span>2列形式</span><br>
+                            <small>"35.6762","139.6503"</small>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button id="convertButton" class="convert-button" style="margin-top: 15px;">形式を変換</button>
+        </div>
+
+        <!-- 変換後のデータプレビュー -->
+        <div id="convertedPreviewSection" class="section" style="display: none;">
+            <h3>変換後のデータプレビュー</h3>
+            <div id="convertedDataPreview" style="overflow-x: auto; margin-top: 15px; margin-bottom: 15px;"></div>
+            <button id="downloadButton" class="convert-button">ダウンロード</button>
+        </div>
+
+        <!-- エラー表示 -->
+        <div id="errorSection" class="section error-section" style="display: none;">
+            <h3>エラー</h3>
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+
+        <!-- ローディング表示 -->
+        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+            <p>処理中...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "coordinate-transformer",
+  "version": "1.0.0",
+  "description": "座標変換ツール - Proj4jsを使用したブラウザ内座標変換",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "coordinates",
+    "transform",
+    "geojson",
+    "topojson",
+    "proj4",
+    "epsg"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "proj4": "^2.20.0"
+  }
+}
