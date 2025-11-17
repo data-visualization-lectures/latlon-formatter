@@ -13,6 +13,7 @@ const latitudeColumn = document.getElementById('latitudeColumn');
 const longitudeColumn = document.getElementById('longitudeColumn');
 const convertButton = document.getElementById('convertButton');
 const downloadButton = document.getElementById('downloadButton');
+const decimalPlacesSelect = document.getElementById('decimalPlaces');
 const errorSection = document.getElementById('errorSection');
 const errorMessage = document.getElementById('errorMessage');
 const loadingIndicator = document.getElementById('loadingIndicator');
@@ -28,6 +29,8 @@ let selectedLonColumn = null;    // 2列形式の場合の経度列
 let editedData = null;           // 編集されたデータ
 let convertedHeaders = [];       // 変換後のヘッダー
 let uploadedFileName = '';       // アップロードされたファイル名
+let maxDecimalPlaces = 0;        // 元データの最大小数点以下桁数
+let selectedDecimalPlaces = 0;   // 選択された小数点以下桁数
 
 // 初期化
 document.addEventListener('DOMContentLoaded', () => {
@@ -132,6 +135,9 @@ function handleFileSelect(e) {
                 // ファイル情報を表示
                 displayFileInfo(file.name, csvData.length, headers);
 
+                // 最大小数点以下桁数を検出
+                detectAndSetupDecimalPlaces(headers, csvData);
+
                 // 列の割り当てセクションを表示
                 populateColumnSelects(headers);
                 formatSelectionSection.style.display = 'block';
@@ -177,6 +183,52 @@ function displayFileInfo(fileName, rowCount, columnHeaders) {
 
     // データプレビューを表示
     displayDataPreview(columnHeaders, csvData);
+}
+
+// 最大小数点以下桁数を検出し、セレクトボックスを生成
+function detectAndSetupDecimalPlaces(columnHeaders, data) {
+    maxDecimalPlaces = detectMaxDecimalPlaces(columnHeaders, data);
+
+    // セレクトボックスを生成
+    decimalPlacesSelect.innerHTML = '';
+    for (let i = 1; i <= maxDecimalPlaces; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i + ' 桁' + (i === maxDecimalPlaces ? ' （元データ）' : '');
+        decimalPlacesSelect.appendChild(option);
+    }
+
+    // デフォルトは元データの桁数
+    decimalPlacesSelect.value = maxDecimalPlaces;
+    selectedDecimalPlaces = maxDecimalPlaces;
+
+    // セレクト変更イベント
+    decimalPlacesSelect.addEventListener('change', (e) => {
+        selectedDecimalPlaces = parseInt(e.target.value);
+    });
+}
+
+// 元データの最大小数点以下桁数を検出
+function detectMaxDecimalPlaces(columnHeaders, data) {
+    let maxPlaces = 0;
+
+    data.forEach(row => {
+        columnHeaders.forEach(header => {
+            const value = row[header];
+            if (value && typeof value === 'string') {
+                // 数値かどうか確認
+                const num = parseFloat(value);
+                if (!isNaN(num) && value.includes('.')) {
+                    const decimalPart = value.split('.')[1];
+                    const places = decimalPart.length;
+                    maxPlaces = Math.max(maxPlaces, places);
+                }
+            }
+        });
+    });
+
+    // 最小1桁、最大15桁
+    return Math.max(1, Math.min(maxPlaces, 15));
 }
 
 // データプレビューを表示（最初の5行）
@@ -339,8 +391,8 @@ function convertData() {
 
             const coordStr = row[selectedColumn] || '';
             const parts = coordStr.split(',').map(s => s.trim());
-            newRow['緯度'] = parts[0] || '';
-            newRow['経度'] = parts[1] || '';
+            newRow['緯度'] = formatDecimalPlaces(parts[0] || '', selectedDecimalPlaces);
+            newRow['経度'] = formatDecimalPlaces(parts[1] || '', selectedDecimalPlaces);
 
             return newRow;
         });
@@ -362,8 +414,8 @@ function convertData() {
                 }
             });
 
-            const lat = row[selectedLatColumn] || '';
-            const lon = row[selectedLonColumn] || '';
+            const lat = formatDecimalPlaces(row[selectedLatColumn] || '', selectedDecimalPlaces);
+            const lon = formatDecimalPlaces(row[selectedLonColumn] || '', selectedDecimalPlaces);
             newRow['座標'] = `${lat},${lon}`;
 
             return newRow;
@@ -372,6 +424,16 @@ function convertData() {
         // 変換不要
         convertedHeaders = headers;
     }
+}
+
+// 小数点以下の桁数で丸める
+function formatDecimalPlaces(value, places) {
+    if (!value || isNaN(parseFloat(value))) {
+        return value;
+    }
+
+    const num = parseFloat(value);
+    return num.toFixed(places);
 }
 
 // 変換後のデータをプレビュー表示
