@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV 緯度経度編集ツール</title>
+    <title>緯度経度フォーマッター</title>
     <link rel="stylesheet" href="style.css">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RLGCWMH98M"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'G-RLGCWMH98M');
     </script>
 </head>
+
 <body>
     <div class="container">
-        <h1>CSV 緯度経度編集ツール</h1>
+        <h1>緯度経度フォーマッター</h1>
         <p class="subtitle">CSVの緯度経度列を簡単に編集して、再度ダウンロード</p>
 
         <!-- ファイルアップロード -->
         <div class="section">
             <label>CSVファイルをアップロード:</label>
             <div class="file-upload-area">
-                <input
-                    type="file"
-                    id="fileInput"
-                    accept=".csv"
-                    class="file-input"
-                >
+                <input type="file" id="fileInput" accept=".csv" class="file-input">
                 <label for="fileInput" class="file-upload-label">
                     <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -94,8 +91,10 @@
             </div>
 
             <!-- 桁数調整 -->
-            <div style="margin-top: 20px; padding: 15px; background-color: #f9fafb; border-radius: 6px; border: 1px solid #e5e7eb;">
-                <label for="decimalPlaces" style="display: block; margin-bottom: 8px; font-weight: 600;">緯度経度の小数点以下の桁数:</label>
+            <div
+                style="margin-top: 20px; padding: 15px; background-color: #f9fafb; border-radius: 6px; border: 1px solid #e5e7eb;">
+                <label for="decimalPlaces"
+                    style="display: block; margin-bottom: 8px; font-weight: 600;">緯度経度の小数点以下の桁数:</label>
                 <p style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">元データより多い桁数には設定できません</p>
                 <select id="decimalPlaces" class="input-field"></select>
             </div>
@@ -128,4 +127,5 @@
     <script src="js/lib/dataviz-auth-client.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
