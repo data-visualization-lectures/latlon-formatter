@@ -122,19 +122,66 @@ Location B,34.69,135.50,京都
 - **フロントエンド**: HTML, CSS, JavaScript (Vanilla)
 - **CSV処理**: Papa Parse
 - **バックエンド**: Node.js + Express（静的ファイル提供のみ）
+- **認証**: Supabase + dataviz-auth-client.js
+
+## 認証クライアント (dataviz-auth-client.js)
+
+このツールは dataviz.jp の共通認証システムを使用しています。
+
+### 主な機能
+
+- **自動ログイン状態管理**: Supabase認証を使用した自動セッション管理
+- **共通ヘッダー**: Web Component (`<dataviz-header>`) による統一されたUI
+- **サブスクリプション確認**: アクティブなサブスクリプションの自動検証
+- **クッキーベースの認証**: `.dataviz.jp` ドメイン全体で共有される認証状態
+
+### リファクタリング内容 (2025-12-31)
+
+最新版の `dataviz-auth-client.js` では以下の改善が行われました:
+
+1. **グローバル変数名の変更**
+   - `window.supabase` → `window.datavizSupabase`
+   - より明示的な命名で他のSupabaseインスタンスとの競合を回避
+
+2. **Web Component標準化**
+   - Custom Elements API (`DatavizGlobalHeader extends HTMLElement`) を使用
+   - より標準的で保守性の高い実装
+
+3. **認証フローの簡素化**
+   - フォールバックチェックを削除
+   - `onAuthStateChange` イベントのみで処理
+
+4. **デバッグモード対応**
+   - URLに `?auth_debug` を追加することでリダイレクトを抑制
+   - ローカル開発時に便利: `http://localhost:3000/?auth_debug`
+
+### デバッグモードの使用方法
+
+ローカルサーバーで動作確認する際、認証リダイレクトを避けるには:
+
+```
+http://localhost:3000/?auth_debug
+```
+
+このパラメータを付けると、ログイン画面へのリダイレクトが抑制され、コンソールに警告メッセージが表示されます。
 
 ## ファイル構成
 
 ```
 .
-├── server.js           # Node.js サーバー
-├── index.html          # UIマークアップ
-├── style.css           # スタイル
-├── script.js           # メインロジック（CSV解析・変換）
-├── package.json        # 依存パッケージ
-├── sample.csv          # サンプルデータ
-├── .gitignore          # Git除外ファイル
-└── README.md           # このファイル
+├── server.js                        # Node.js サーバー
+├── index.html                       # UIマークアップ
+├── style.css                        # スタイル
+├── script.js                        # メインロジック（CSV解析・変換）
+├── js/
+│   └── lib/
+│       ├── supabase.js              # Supabase クライアントライブラリ
+│       ├── dataviz-auth-client.js   # 認証クライアント（リファクタリング済み）
+│       └── dataviz-auth-client_old.js # 旧認証クライアント（参考用）
+├── package.json                     # 依存パッケージ
+├── sample.csv                       # サンプルデータ
+├── .gitignore                       # Git除外ファイル
+└── README.md                        # このファイル
 ```
 
 ## トラブルシューティング
