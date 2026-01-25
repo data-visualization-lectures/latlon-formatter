@@ -214,7 +214,7 @@ PORT=3001 npm start
 # サーバー起動
 npm start
 
-# ブラウザで http://localhost:3000 にアクセス
+http://localhost:3000/?auth_debug
 ```
 
 ## ライセンス
