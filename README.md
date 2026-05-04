@@ -38,6 +38,29 @@ npm start
 
 ブラウザで `http://localhost:3000` にアクセス
 
+## デプロイ (Netlify)
+
+このリポジトリは、`main` ブランチへ push すると Netlify が自動デプロイする前提です。
+
+### Netlify の設定値
+
+- **Repository**: `data-visualization-lectures/latlon-formatter`
+- **Production branch**: `main`
+- **Build command**: なし
+- **Publish directory**: `.`
+
+### 手順
+
+1. Netlify で GitHub リポジトリ `data-visualization-lectures/latlon-formatter` を接続
+2. 上記設定値でサイトを作成
+3. Netlify 側でカスタムドメイン `latlon-formatter.dataviz.jp` を設定
+4. 以後は GitHub に push すると Netlify が自動で再デプロイ
+
+### ドメインに関する注意
+
+このアプリは `.dataviz.jp` ドメインで共有される認証クッキーを利用します。  
+そのため本番URLは `*.netlify.app` ではなく、`latlon-formatter.dataviz.jp` を Netlify のカスタムドメインとして割り当ててください。
+
 ## 使い方
 
 ### 基本的な流れ
@@ -121,12 +144,15 @@ Location B,34.69,135.50,京都
 
 - **フロントエンド**: HTML, CSS, JavaScript (Vanilla)
 - **CSV処理**: Papa Parse
-- **バックエンド**: Node.js + Express（静的ファイル提供のみ）
+- **ローカル開発サーバー**: Node.js + Express（静的ファイル提供のみ）
+- **ホスティング**: Netlify
 - **認証**: Supabase + dataviz-auth-client.js
 
 ## 認証クライアント (dataviz-auth-client.js)
 
 このツールは dataviz.jp の共通認証システムを使用しています。
+
+本番環境では `latlon-formatter.dataviz.jp` を Netlify のカスタムドメインとして利用してください。`*.netlify.app` ドメインでは `.dataviz.jp` の認証状態を共有できません。
 
 ### 主な機能
 
@@ -169,20 +195,18 @@ http://localhost:3000/?auth_debug
 
 ```
 .
-├── server.js                        # Node.js サーバー
+├── netlify.toml                     # Netlify デプロイ設定
+├── server.js                        # ローカル開発用サーバー
 ├── index.html                       # UIマークアップ
 ├── style.css                        # スタイル
 ├── script.js                        # メインロジック（CSV解析・変換）
-├── js/
-│   └── lib/
-│       ├── supabase.js              # Supabase クライアントライブラリ
-│       ├── dataviz-auth-client.js   # 認証クライアント（リファクタリング済み）
-│       └── dataviz-auth-client_old.js # 旧認証クライアント（参考用）
 ├── package.json                     # 依存パッケージ
 ├── sample.csv                       # サンプルデータ
 ├── .gitignore                       # Git除外ファイル
 └── README.md                        # このファイル
 ```
+
+認証関連のスクリプトは `index.html` から `https://app.dataviz.jp/` 配下を直接読み込みます。
 
 ## トラブルシューティング
 
