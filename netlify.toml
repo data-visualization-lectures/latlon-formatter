@@ -1,2 +1,8 @@
 [build]
   publish = "."
+
+[[redirects]]
+  from = "https://latlon-formatter.dataviz.jp/*"
+  to = "https://latlon-formatter.dataprep.jp/:splat"
+  status = 301
+  force = true
