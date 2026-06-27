@@ -1,12 +1,14 @@
 :root {
-    --primary-color: #2563eb;
-    --primary-dark: #1e40af;
+    --primary-color: #0f6cbd;
+    --primary-dark: #0958b5;
     --success-color: #10b981;
     --error-color: #ef4444;
     --border-color: #e5e7eb;
-    --text-color: #1f2937;
-    --bg-color: #f9fafb;
-    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --text-color: #111827;
+    --text-muted: #6b7280;
+    --bg-color: #fafafa;
+    --surface-color: #ffffff;
+    --shadow: 0 1px 3px rgba(17, 24, 39, 0.08);
 }
 
 * {
@@ -16,32 +18,33 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
-    padding: 20px;
-    padding-top: calc(48px + 20px);
+    padding: 24px;
+    padding-top: calc(48px + 24px);
 }
 
 .container {
     max-width: 900px;
     margin: 0 auto;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 40px;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 32px;
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 1.75em;
     margin-bottom: 8px;
-    color: var(--primary-color);
+    color: var(--text-color);
 }
 
 .subtitle {
-    color: #6b7280;
-    margin-bottom: 30px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
     font-size: 0.95em;
 }
 
@@ -75,24 +78,26 @@ label {
 
 .input-field {
     width: 100%;
+    min-height: 44px;
     padding: 10px 12px;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: 10px;
     font-size: 0.95em;
     font-family: inherit;
     transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: #ffffff;
 }
 
 .input-field:focus,
 select:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(15, 108, 189, 0.14);
 }
 
 select {
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232563eb' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230F6CBD' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 10px center;
     padding-right: 32px;
@@ -116,9 +121,9 @@ select {
 /* 変換前の座標系表示（読み取り専用） */
 .system-display-box {
     padding: 12px;
-    background-color: #f3f4f6;
+    background-color: #f9fafb;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: 10px;
     font-size: 0.95em;
     min-height: 40px;
     display: flex;
@@ -131,7 +136,7 @@ select {
     display: block;
     margin-top: 6px;
     font-size: 0.85em;
-    color: #6b7280;
+    color: var(--text-muted);
 }
 
 .hint a {
@@ -158,13 +163,15 @@ select {
 .swap-button {
     align-self: flex-end;
     margin-bottom: 0;
+    min-width: 44px;
+    min-height: 44px;
     padding: 10px 12px;
     background-color: var(--bg-color);
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 1.2em;
-    transition: all 0.2s;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .swap-button:hover {
@@ -221,55 +228,57 @@ select {
     background-color: var(--bg-color);
     border-radius: 4px;
     font-size: 0.85em;
-    color: #6b7280;
+    color: var(--text-muted);
     min-height: 20px;
 }
 
 .system-description {
     margin-top: 8px;
     padding: 8px 10px;
-    background-color: #f3f4f6;
-    border-radius: 4px;
+    background-color: #f9fafb;
+    border-radius: 8px;
     font-size: 0.82em;
-    color: #9ca3af;
+    color: var(--text-muted);
     line-height: 1.5;
 }
 
 /* Buttons */
 .convert-button {
     width: 100%;
+    min-height: 44px;
     padding: 12px 20px;
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 10px;
     font-size: 1em;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: filter 0.2s ease, background 0.2s ease;
     margin-bottom: 25px;
 }
 
 .convert-button:hover {
-    background-color: var(--primary-dark);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    filter: brightness(0.7);
 }
 
 .convert-button:active {
-    transform: translateY(2px);
+    transform: none;
 }
 
 .convert-button:disabled {
     background-color: #d1d5db;
     cursor: not-allowed;
+    filter: none;
 }
 
 /* Results */
 .results-section {
-    background-color: #f0fdf4;
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
     border-left: 4px solid var(--success-color);
     padding: 20px;
-    border-radius: 6px;
+    border-radius: 12px;
     margin-bottom: 25px;
 }
 
@@ -282,14 +291,14 @@ select {
 .result-item {
     background-color: white;
     padding: 12px;
-    border-radius: 4px;
+    border-radius: 8px;
     border: 1px solid var(--border-color);
     font-family: 'Monaco', 'Menlo', monospace;
     font-size: 0.9em;
 }
 
 .result-item .label {
-    color: #6b7280;
+    color: var(--text-muted);
     font-size: 0.85em;
     margin-bottom: 4px;
 }
@@ -302,9 +311,10 @@ select {
 /* Error */
 .error-section {
     background-color: #fef2f2;
+    border: 1px solid #fecaca;
     border-left: 4px solid var(--error-color);
     padding: 20px;
-    border-radius: 6px;
+    border-radius: 12px;
     margin-bottom: 25px;
 }
 
@@ -342,21 +352,21 @@ select {
 .file-upload-area {
     position: relative;
     border: 2px dashed var(--border-color);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 40px 20px;
     text-align: center;
-    transition: all 0.2s;
-    background-color: var(--bg-color);
+    transition: border-color 0.2s ease, background 0.2s ease;
+    background-color: #f9fafb;
 }
 
 .file-upload-area:hover {
     border-color: var(--primary-color);
-    background-color: #f0f9ff;
+    background-color: #eff6ff;
 }
 
 .file-upload-area.drag-over {
     border-color: var(--primary-color);
-    background-color: rgba(37, 99, 235, 0.05);
+    background-color: rgba(15, 108, 189, 0.06);
 }
 
 .file-upload-label {
@@ -384,8 +394,8 @@ select {
 .file-info {
     margin-top: 15px;
     padding: 12px;
-    background-color: var(--bg-color);
-    border-radius: 6px;
+    background-color: #f9fafb;
+    border-radius: 10px;
     font-size: 0.9em;
 }
 
@@ -395,14 +405,14 @@ select {
 
 .file-info-label {
     font-weight: 600;
-    color: #6b7280;
+    color: var(--text-muted);
 }
 
 .file-preview {
     margin-top: 15px;
     padding: 12px;
-    background-color: var(--bg-color);
-    border-radius: 6px;
+    background-color: #f9fafb;
+    border-radius: 10px;
     max-height: 200px;
     overflow-y: auto;
     font-size: 0.85em;
@@ -425,8 +435,8 @@ select {
 .format-select {
     padding: 15px;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background-color: var(--bg-color);
+    border-radius: 12px;
+    background-color: #f9fafb;
 }
 
 .format-select > label {
@@ -448,12 +458,12 @@ select {
     font-weight: normal;
     cursor: pointer;
     padding: 8px;
-    border-radius: 4px;
+    border-radius: 8px;
     transition: background-color 0.2s;
 }
 
 .radio-label:hover {
-    background-color: rgba(37, 99, 235, 0.05);
+    background-color: rgba(15, 108, 189, 0.06);
 }
 
 .radio-label input[type="radio"] {
@@ -467,7 +477,7 @@ select {
 
 .radio-label small {
     display: block;
-    color: #6b7280;
+    color: var(--text-muted);
     font-size: 0.85em;
     margin-top: 2px;
 }
@@ -507,19 +517,19 @@ select {
 }
 
 .data-table thead {
-    background-color: #f5f5f5;
+    background-color: #f3f4f6;
 }
 
 .data-table th {
     padding: 10px 8px;
     text-align: left;
     font-weight: 600;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
 }
 
 .data-table td {
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
 }
 
 .table-cell-input {
@@ -538,8 +548,13 @@ select {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        padding: 16px;
+        padding-top: calc(48px + 16px);
+    }
+
     .container {
-        padding: 20px;
+        padding: 24px 16px;
     }
 
     h1 {
@@ -569,5 +584,10 @@ select {
     .upload-icon {
         width: 40px;
         height: 40px;
+    }
+
+    .format-selection-row,
+    .column-assignment-row {
+        grid-template-columns: 1fr;
     }
 }
